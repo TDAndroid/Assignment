@@ -42,4 +42,8 @@ dependencies {
     implementation "android.arch.lifecycle:extensions:$rootProject.ext.archComponentVersion"
     implementation "android.arch.persistence.room:runtime:$rootProject.ext.archComponentVersion"
     annotationProcessor "android.arch.persistence.room:compiler:$rootProject.ext.archComponentVersion"
+
+    //Butterknife
+    implementation "com.jakewharton:butterknife:$rootProject.ext.butterKnifeVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterKnifeVersion"
 }
