@@ -38,4 +38,5 @@ ext {
     googleGsonVersion='2.8.5'
     archComponentVersion='1.1.1'
     butterKnifeVersion='8.8.1'
+    httpInterceptor=''
 }
