@@ -7,11 +7,11 @@ import java.util.List;
 public class FactsResponse {
 
     private String title;
-    private List<FactsModel> factsModel;
+    private List<FactsModel> rows;
 
     public FactsResponse(String title, List<FactsModel> factsModel) {
         this.title = title;
-        this.factsModel = factsModel;
+        this.rows = factsModel;
     }
 
     public String getTitle() {
@@ -23,11 +23,11 @@ public class FactsResponse {
     }
 
     public List<FactsModel> getFactsModel() {
-        return factsModel;
+        return rows;
     }
 
     public void setFactsModel(List<FactsModel> factsModel) {
-        this.factsModel = factsModel;
+        this.rows = factsModel;
     }
 
 }

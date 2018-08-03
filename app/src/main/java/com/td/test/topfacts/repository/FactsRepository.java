@@ -2,8 +2,6 @@ package com.td.test.topfacts.repository;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
-import android.arch.lifecycle.Observer;
-import android.support.annotation.Nullable;
 
 import com.td.test.topfacts.repository.database.model.FactsModel;
 import com.td.test.topfacts.repository.network.API;

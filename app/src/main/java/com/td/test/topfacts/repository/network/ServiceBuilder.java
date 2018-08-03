@@ -14,7 +14,7 @@ public class ServiceBuilder {
     private static OkHttpClient.Builder okHttp =
             new OkHttpClient.Builder().addInterceptor(logger);
     private static Retrofit.Builder factServiceBuilder =
-            new Retrofit.Builder().baseUrl("https://dl.dropboxusercontent.com/s/2iodh4vg0eortkl/")
+            new Retrofit.Builder().baseUrl("https://dl.dropboxusercontent.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttp.build());
     private static Retrofit retrofit = factServiceBuilder.build();

@@ -2,6 +2,7 @@ package com.td.test.topfacts.uicomponents.facts;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,12 +41,13 @@ public class FactsListAdapter extends RecyclerView.Adapter<FactsListAdapter.Fact
         factsViewHolder.tvHeader.setText(factsModel.getTitle());
         factsViewHolder.tvDescription.setText(factsModel.getDescription());
         String imageUrl = factsModel.getImageHref();
-        if (imageUrl.equalsIgnoreCase("")) {
-
+        if (imageUrl == null) {
+            factsViewHolder.ivFactsImage.setVisibility(View.GONE);
         } else {
             Picasso.get().load(imageUrl)
                     .placeholder(R.drawable.ic_image_offline)
                     .error(R.drawable.ic_image_offline)
+                    .fit()
                     .into(factsViewHolder.ivFactsImage);
         }
     }
