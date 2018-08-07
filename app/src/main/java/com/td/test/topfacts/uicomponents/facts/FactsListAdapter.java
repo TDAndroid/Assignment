@@ -2,7 +2,6 @@ package com.td.test.topfacts.uicomponents.facts;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatImageView;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +26,11 @@ public class FactsListAdapter extends RecyclerView.Adapter<FactsListAdapter.Fact
         this.listFactModel = listFactsModel;
     }
 
+    public void updateAdapterItems(List<FactsModel> updatedFacts) {
+        listFactModel = updatedFacts;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public FactsListAdapter.FactsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -44,6 +48,7 @@ public class FactsListAdapter extends RecyclerView.Adapter<FactsListAdapter.Fact
         if (imageUrl == null) {
             factsViewHolder.ivFactsImage.setVisibility(View.GONE);
         } else {
+            factsViewHolder.ivFactsImage.setVisibility(View.VISIBLE);
             Picasso.get().load(imageUrl)
                     .placeholder(R.drawable.ic_image_offline)
                     .error(R.drawable.ic_image_offline)

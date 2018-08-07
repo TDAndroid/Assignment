@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import com.td.test.topfacts.repository.FactsRepository;
 import com.td.test.topfacts.repository.database.model.FactsModel;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -17,24 +18,29 @@ public class FactsViewModel extends AndroidViewModel {
     private FactsListAdapter factsListAdapter;
     public FactsViewModel(@NonNull Application application) {
         super(application);
-        factsRepository = FactsRepository.getInstance();
+        factsRepository = FactsRepository.getInstance(application);
     }
 
-    public FactsListAdapter getAdapter(List<FactsModel> listFactsModel) {
+    public FactsListAdapter getAdapter() {
         if (factsListAdapter == null) {
-            Iterator<FactsModel> iterator = listFactsModel.iterator();
-            while (iterator.hasNext()) {
-                FactsModel factsModel = iterator.next();
-                String header = factsModel.getTitle();
-                String description = factsModel.getDescription();
-                if (header == null && description == null)
-                    iterator.remove();
-            }
-            factsListAdapter = new FactsListAdapter(listFactsModel);
+            factsListAdapter = new FactsListAdapter(new ArrayList<FactsModel>());
         }
         return  factsListAdapter;
     }
 
+    public List<FactsModel> getFilteredFacts(List<FactsModel> listFactsModel) {
+        if (listFactsModel == null)
+            return new ArrayList<>();
+        Iterator<FactsModel> iterator = listFactsModel.iterator();
+        while (iterator.hasNext()) {
+            FactsModel factsModel = iterator.next();
+            String header = factsModel.getTitle();
+            String description = factsModel.getDescription();
+            if (header.equals("") && description == null)
+                iterator.remove();
+        }
+        return listFactsModel;
+    }
     public LiveData<List<FactsModel>> getFacts() {
         return factsRepository.getFacts();
     }

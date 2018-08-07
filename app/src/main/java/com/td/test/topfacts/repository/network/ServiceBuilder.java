@@ -1,5 +1,7 @@
 package com.td.test.topfacts.repository.network;
 
+import com.td.test.topfacts.util.AppConstants;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -14,7 +16,7 @@ public class ServiceBuilder {
     private static OkHttpClient.Builder okHttp =
             new OkHttpClient.Builder().addInterceptor(logger);
     private static Retrofit.Builder factServiceBuilder =
-            new Retrofit.Builder().baseUrl("https://dl.dropboxusercontent.com/")
+            new Retrofit.Builder().baseUrl(AppConstants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttp.build());
     private static Retrofit retrofit = factServiceBuilder.build();
