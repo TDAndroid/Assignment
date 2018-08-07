@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TopFacts</string>
+    <string name="app_global_network_message">Check your internet connection !!!</string>
 </resources>

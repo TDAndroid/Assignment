@@ -12,7 +12,6 @@ import com.squareup.picasso.Picasso;
 import com.td.test.topfacts.R;
 import com.td.test.topfacts.repository.database.model.FactsModel;
 
-
 import java.util.List;
 
 import butterknife.BindView;

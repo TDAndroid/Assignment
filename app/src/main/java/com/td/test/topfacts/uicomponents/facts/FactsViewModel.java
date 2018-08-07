@@ -16,6 +16,7 @@ public class FactsViewModel extends AndroidViewModel {
 
     private FactsRepository factsRepository;
     private FactsListAdapter factsListAdapter;
+
     public FactsViewModel(@NonNull Application application) {
         super(application);
         factsRepository = FactsRepository.getInstance(application);
@@ -25,7 +26,7 @@ public class FactsViewModel extends AndroidViewModel {
         if (factsListAdapter == null) {
             factsListAdapter = new FactsListAdapter(new ArrayList<FactsModel>());
         }
-        return  factsListAdapter;
+        return factsListAdapter;
     }
 
     public List<FactsModel> getFilteredFacts(List<FactsModel> listFactsModel) {
@@ -41,6 +42,7 @@ public class FactsViewModel extends AndroidViewModel {
         }
         return listFactsModel;
     }
+
     public LiveData<List<FactsModel>> getFacts() {
         return factsRepository.getFacts();
     }

@@ -10,10 +10,10 @@ public class Util {
     private Util() {
     }
 
-    public static boolean isNetworkConnected(Context context){
+    public static boolean isNetworkConnected(Context context) {
 
         ConnectivityManager connectivityManager =
-                (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
         return activeNetwork != null && activeNetwork.isConnectedOrConnecting();

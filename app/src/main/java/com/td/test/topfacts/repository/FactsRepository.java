@@ -6,7 +6,6 @@ import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 
 import com.td.test.topfacts.repository.database.AppDatabase;
@@ -15,7 +14,6 @@ import com.td.test.topfacts.repository.network.API;
 import com.td.test.topfacts.repository.network.ServiceBuilder;
 import com.td.test.topfacts.repository.network.responsemodel.FactsResponse;
 import com.td.test.topfacts.util.AppConstants;
-import com.td.test.topfacts.util.Util;
 
 import java.util.List;
 
@@ -25,16 +23,14 @@ import retrofit2.Response;
 
 public class FactsRepository {
 
-    private FactsRepository() {
-    }
     private static AppDatabase appDatabase;
     private static SharedPreferences sharedPreferences;
     private static FactsRepository factsRepository;
     private static API api;
-    private static Application application;
+    private FactsRepository() {
+    }
 
     public static FactsRepository getInstance(Application appContext) {
-        application = appContext;
         if (factsRepository == null) {
             synchronized (FactsRepository.class) {
                 if (factsRepository == null) {
@@ -50,29 +46,28 @@ public class FactsRepository {
 
     /**
      * Get the facts from the network
+     *
      * @return
      */
     public LiveData<List<FactsModel>> getFacts() {
         final MediatorLiveData<List<FactsModel>> mlFactsModel = new MediatorLiveData<>();
-        if (Util.isNetworkConnected(application.getApplicationContext())) {
-            api.getFacts().enqueue(new Callback<FactsResponse>() {
-                @Override
-                public void onResponse(Call<FactsResponse> call, Response<FactsResponse> response) {
-                    if (response != null && response.body().getFactsModel()!= null) {
-                        List<FactsModel> listFactsModel = response.body().getFactsModel();
-                        if (listFactsModel != null)
-                            insertFacts(listFactsModel);
-                        String title = response.body().getTitle();
-                        sharedPreferences.edit().putString(AppConstants.SH_APP_TITLE, title).commit();
-                    }
+        api.getFacts().enqueue(new Callback<FactsResponse>() {
+            @Override
+            public void onResponse(Call<FactsResponse> call, Response<FactsResponse> response) {
+                if (response != null && response.body().getFactsModel() != null) {
+                    List<FactsModel> listFactsModel = response.body().getFactsModel();
+                    if (listFactsModel != null)
+                        insertFacts(listFactsModel);
+                    String title = response.body().getTitle();
+                    sharedPreferences.edit().putString(AppConstants.SH_APP_TITLE, title).commit();
                 }
+            }
 
-                @Override
-                public void onFailure(Call<FactsResponse> call, Throwable t) {
+            @Override
+            public void onFailure(Call<FactsResponse> call, Throwable t) {
 
-                }
-            });
-        }
+            }
+        });
         mlFactsModel.addSource(appDatabase.getFactsModelDao().getFacts(), new Observer<List<FactsModel>>() {
             @Override
             public void onChanged(@Nullable List<FactsModel> factsModels) {
@@ -85,6 +80,7 @@ public class FactsRepository {
 
     /**
      * Insert facts into room db
+     *
      * @param facts
      */
     public void insertFacts(final List<FactsModel> facts) {

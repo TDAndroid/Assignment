@@ -9,4 +9,4 @@ public interface API {
 
     @GET("/s/2iodh4vg0eortkl/facts.js")
     Call<FactsResponse> getFacts();
- }
+}

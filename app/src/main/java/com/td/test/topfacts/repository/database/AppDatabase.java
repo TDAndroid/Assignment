@@ -10,7 +10,7 @@ import com.td.test.topfacts.repository.database.model.FactsModel;
 import com.td.test.topfacts.util.AppConstants;
 
 @Database(entities = {FactsModel.class}, version = 1)
-public abstract class AppDatabase extends RoomDatabase{
+public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase INSTANCE;
 

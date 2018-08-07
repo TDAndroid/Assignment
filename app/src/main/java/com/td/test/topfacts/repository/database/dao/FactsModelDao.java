@@ -10,13 +10,12 @@ import com.td.test.topfacts.repository.database.model.FactsModel;
 
 import java.util.List;
 
-import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
-
 @Dao
 public interface FactsModelDao {
 
     /**
      * Insert or replace table values
+     *
      * @param facts
      * @return
      */
