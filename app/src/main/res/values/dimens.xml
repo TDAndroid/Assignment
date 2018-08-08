@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="top_margin">5dp</dimen>
+    <dimen name="elevation">5dp</dimen>
+    <dimen name="header_text">18sp</dimen>
+    <dimen name="icon_width_height">50dp</dimen>
+    <dimen name="body_text">14sp</dimen>
+</resources>

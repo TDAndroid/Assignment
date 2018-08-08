@@ -50,42 +50,45 @@ public class FactsActivity extends AppCompatActivity implements LifecycleOwner {
         initUi();
     }
 
+    /**
+     * initialize UI
+     * if internet connection is not available values fetch from db
+     */
     private void initUi() {
         setSupportActionBar(toolbar);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        factsViewModel = ViewModelProviders.of(this).get(FactsViewModel.class);
+        recyclerView.setLayoutManager(new LinearLayoutManager(FactsActivity.this));
+        factsViewModel = ViewModelProviders.of(FactsActivity.this).get(FactsViewModel.class);
         adapter = factsViewModel.getAdapter();
         recyclerView.setAdapter(adapter);
         refreshLayout.setEnabled(false);
-        if (Util.isNetworkConnected(getApplicationContext())) {
-            factsViewModel.getFacts().observe(this, new Observer<List<FactsModel>>() {
-                @Override
-                public void onChanged(@Nullable List<FactsModel> factsModels) {
-                    adapter.updateAdapterItems(factsViewModel.getFilteredFacts(factsModels));
-                    progressBar.setVisibility(View.INVISIBLE);
-                    refreshLayout.setEnabled(true);
-                    setAppTitle();
-                }
-            });
-            refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                @Override
-                public void onRefresh() {
-                    factsViewModel.getFacts().observe(FactsActivity.this, new Observer<List<FactsModel>>() {
-                        @Override
-                        public void onChanged(@Nullable List<FactsModel> factsModels) {
-                            adapter.updateAdapterItems(factsViewModel.getFilteredFacts(factsModels));
-                            refreshLayout.setRefreshing(false);
-                            setAppTitle();
-                        }
-                    });
-                }
-            });
-        } else {
+        if (!Util.isNetworkConnected(getApplicationContext())) {
             Toast.makeText(FactsActivity.this, R.string.app_global_network_message, Toast.LENGTH_SHORT).show();
             progressBar.setVisibility(View.INVISIBLE);
             setAppTitle();
         }
+        factsViewModel.getFacts().observe(this, new Observer<List<FactsModel>>() {
+            @Override
+            public void onChanged(@Nullable List<FactsModel> factsModels) {
+                adapter.updateAdapterItems(factsViewModel.getFilteredFacts(factsModels));
+                refreshLayout.setEnabled(true);
+                setAppTitle();
+                progressBar.setVisibility(View.INVISIBLE);
+            }
+        });
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                factsViewModel.getFacts().observe(FactsActivity.this, new Observer<List<FactsModel>>() {
+                    @Override
+                    public void onChanged(@Nullable List<FactsModel> factsModels) {
+                        adapter.updateAdapterItems(factsViewModel.getFilteredFacts(factsModels));
+                        refreshLayout.setRefreshing(false);
+                        setAppTitle();
+                    }
+                });
+            }
+        });
     }
 
     private void setAppTitle() {
